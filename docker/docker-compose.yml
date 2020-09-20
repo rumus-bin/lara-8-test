@@ -1,0 +1,58 @@
+version: "3.3"
+services:
+  lara_8-app:
+    build:
+      args:
+        user: rumusbin
+        uid: 1000
+      context: ./
+      dockerfile: php/Dockerfile
+    image: laravel_8
+    container_name: laravel_8-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./../app:/var/www
+    networks:
+      - laravel_8
+
+  lara_8-db:
+    image: mariadb
+    container_name: laravel_8-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: lara_8
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_PASSWORD: 12345
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - "3361:3306"
+    volumes:
+      - ./../db:/docker-entrypoint-initdb.d
+    networks:
+      - laravel_8
+
+  lara_8-adminer:
+    image: adminer
+    restart: unless-stopped
+    ports:
+      - 8098:8080
+    networks:
+      - laravel_8
+
+  lara_8-nginx:
+    image: nginx:alpine
+    container_name: lara_8-nginx
+    restart: unless-stopped
+    ports:
+      - 8095:80
+    volumes:
+      - ./../app:/var/www
+      - ./web:/etc/nginx/conf.d/
+    networks:
+      - laravel_8
+
+networks:
+  laravel_8:
+    driver: bridge
