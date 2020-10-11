@@ -177,6 +177,11 @@ return [
         App\Providers\FortifyServiceProvider::class,
         App\Providers\JetstreamServiceProvider::class,
 
+        /*
+         *  Api Service providers ...
+         */
+        API\ApiServiceProvider::class
+
     ],
 
     /*
