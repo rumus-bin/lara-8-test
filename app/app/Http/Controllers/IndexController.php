@@ -8,7 +8,7 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        dd(123);
+        dd(phpinfo());
     }
 
 }

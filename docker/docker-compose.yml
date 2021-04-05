@@ -5,8 +5,8 @@ services:
       args:
         user: rumusbin
         uid: 1000
-      context: ./
-      dockerfile: php/Dockerfile
+      context: ./php
+      dockerfile: Dockerfile
     image: laravel_8
     container_name: laravel_8-app
     restart: unless-stopped
